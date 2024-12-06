@@ -1,0 +1,181 @@
+\documentclass{beamer}
+
+\usepackage[french]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+
+\usepackage{amsthm}
+\usetheme{Warsaw}
+\setbeamercovered{transparent}
+
+% Macros
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\var}{\mathbb{V}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\norm}{\mathcal{N}(0,1)}
+\newcommand{\stdone}{\hat{\sigma}_{1,n_1}}
+\newcommand{\stdtwo}{\hat{\sigma}_{2,n_2}}
+
+% Titre et auteur
+\title{Test de Wald pour l'égalité des moyennes}
+\author{Maxence Caucheteux, Hassen Kallala, Armand De Cacqueray, Sabri Bouafia}
+\institute{École des ponts et chaussées}
+
+% Changer le texte dans le pied de page globalement
+\setbeamertemplate{footline}{
+  \leavevmode
+  \hbox{
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,center]{palette quaternary}
+      \insertframenumber{} % Afficher le numéro de la page
+    \end{beamercolorbox}
+  }
+}
+
+% Page de garde (titre)
+\begin{document}
+
+% Page de garde avec texte spécifique
+\begin{frame} 
+  \titlepage 
+  \setbeamertemplate{footline}{}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\frame[t]{ % Début d'une diapositive
+\frametitle{Introduction} % Titre de la diapositive
+\begin{block}{Objectifs} % Titre du bloc
+\begin{itemize}
+\item But : déterminer si des moyennes sont égales ou non.
+\item Formellement, on dispose de deux échantillons $\textbf{X}_1=(X_{1,1},\dots,X_{1,n_1})$ et $\textbf{X}_2=(X_{2,1},\dots,X_{2,n_2})$.
+\item On pose $\mu_1=\E (X_{1,1})$ et $\mu_2 = \E (X_{2,1})$
+\item A-t-on $\mu_1=\mu_2$ ?
+\end{itemize}
+\end{block}
+}
+
+\section{Aspects théoriques}
+
+\frame[t]{\frametitle{Hypothèses}
+\begin{block}{Choix des hypothèses}
+$$H_0=\{\mu_1 = \mu_2 \}, \ \ H_1=\{ \mu_1 \neq \mu_2 \}$$
+\end{block}
+Remarques :
+\begin{itemize}
+\item Test bilatéral
+\item De base, on suppose que les moyennes sont égales.
+\item On veut éviter de dire que les moyennes sont différentes alors que ce n'est pas le cas.
+\item On aurait également pu effectuer un test unilatéral via le choix de $H_0 = \{\mu_1 \leq \mu_2 \}$ et $H_1 = \{\mu_1 > \mu_2\}$ (la pertinence du choix dépend de la situation).
+\end{itemize}
+}
+
+\frame[t]{\frametitle{Construction de la statistique de test}
+Pour $j \in \{1,2\}$, on pose :
+\begin{itemize}
+\item $\mu_j = \E (X_{j,1})$
+\item $\sigma_j^2 = \var (X_{j,1})$ (non connus)
+\item $Z_{n_1,n_2} = \overline{X}_{1,n_1}-\overline{X}_{2,n_2}$ (différence empirique des moyennes des deux échantillons)
+\end{itemize}  
+\begin{block}{Normalité asymptotique}
+On peut montrer que : 
+$$\frac{Z_{n_1,n_2} - (\mu_1 - \mu_2)}{\sqrt{\var (Z_{n_1,n_2})}} \xrightarrow[n_1,n_2 \to \infty]{\text{loi}} \norm$$
+\end{block}
+\center{\textbf{Mais on ne connaît pas $\sigma_1$ et $\sigma_2$.}}
+}
+
+\begin{frame}[t]
+\frametitle{Construction de la statistique de test}
+C'est pourquoi on introduit les variances empiriques :
+$$\forall j \in \{ 1,2 \}, \ \ \ \hat{\sigma}_{j,n_j}^2 = \frac{1}{n_j} \sum_{k=1}^{n_j} (X_{j,k} - \overline{X}_{j,n_j})^2$$
+\begin{block}{Forte consistance}
+On a :
+$$
+\frac{\sqrt{\frac{\stdone^2}{n_1} + \frac{\stdtwo^2}{n_2}}}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \xrightarrow[n_1,n_2 \to \infty]{\text{p.s.}} 1
+$$
+\end{block}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Construction de la statistique de test}
+\begin{block}{Région de rejet}
+Avec la région de rejet
+$$W_n = \left\{ Y_n:= \frac{|Z_{n_1,n_2}|}{\sqrt{\frac{\stdone^2}{n_1} + \frac{\stdtwo^2}{n_2}}} \geq \phi_{1-\alpha} \right\},$$
+le test est consistant et de niveau asymptotique $\alpha$.
+\end{block} \
+\center{Rappel : $H_0=\{ \mu_1 = \mu_2 \}$ et $H_1=\{ \mu_1 \neq \mu_2 \}$}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Calcul de la p-valeur}
+\begin{block}{p-valeur}
+Avec $\mu=\mu_1=\mu_2$, on a :
+\begin{align*}
+\text{p-valeur} & = \prob_{\mu} (Y_n \geq y_n^{\text{obs}}) \\
+& \simeq 1- F_G(y_n^{\text{obs}})
+\end{align*}
+\end{block} 
+où $F_G$ est la fonction de répartition de la gaussienne centrée réduite.
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Similarités avec le test de Wald à un échantillon}
+\begin{itemize}
+\item Le test de Wald à deux échantillons généralise le test de Wald à un échantillon.
+\item Pour le test de Wald à un échantillon : $H_0=\{\mu = \mu_0\}$ et $H_1= \{\mu \neq \mu_0\}$ où $\mu_0$ est fixé et connu. 
+\item En prenant pour deuxième échantillon des variables aléatoires déterministes égales à $\mu_0$ dans le test de Wald à deux échantillons, on retrouve le test de Wald à un échantillon.
+\end{itemize}
+\end{frame}
+
+\section{Application}
+
+\begin{frame}[t]
+\frametitle{Présentation du problème}
+\begin{itemize}
+\item Jeu de données : une liste d'élèves du collège dont on sait s'ils ont Internet chez eux ou pas et dont on connaît le nombre d'échecs aux examens passés.
+\item Le nombre d'échecs à des examens mesure en quelque sorte les performances de l'élève.
+\item Question : Les élèves sans accès à Internet réussissent-ils autant à l'école que les élèves qui ont accès à Internet ?
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.3\textwidth]{internet.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Résultats}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Échantillon} & \textbf{Élèves avec Internet} & \textbf{Élèves sans Internet} \\
+\hline
+$n$ & $n_1 = 827$ & $n_2 = 217$ \\
+\hline
+$\mu$ & $\mu_1 = 0.24$ & $\mu_2 = 0.36$ \\
+\hline
+$\sigma$ & $\sigma_1 = 0.62$ & $\sigma_2 = 0.77$ \\
+\hline
+\end{tabular}
+\caption{Tableau des statistiques des échantillons}
+\end{table}
+
+\begin{block}{Calcul de la p-valeur}
+On a :
+$$\text{p-valeur} = 0.017$$
+On rejette $H_0$.
+\end{block} 
+\center{Rappel : $\alpha=5 \%$}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Conclusion à tirer du test}
+\begin{itemize}
+\item On rejette l'hypothèse selon laquelle les élèves avec et sans Internet réussissent autant à l'école.
+\item Les élèves qui n'ont pas internet réussisent moins bien.
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}
