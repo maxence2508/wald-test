@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import norm
+import matplotlib.pyplot as plt
 
 # Charger les fichiers CSV avec le séparateur ';'
 mat = pd.read_csv('student-mat.csv', sep=';')
