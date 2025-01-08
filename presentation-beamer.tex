@@ -101,7 +101,7 @@ $$
 \frametitle{Construction de la statistique de test}
 \begin{block}{Région de rejet}
 Avec la région de rejet
-$$W_n = \left\{ Y_n:= \frac{|Z_{n_1,n_2}|}{\sqrt{\frac{\stdone^2}{n_1} + \frac{\stdtwo^2}{n_2}}} \geq \phi_{1-\alpha} \right\},$$
+$$W_n = \left\{ Y_n:= \frac{|Z_{n_1,n_2}|}{\sqrt{\frac{\stdone^2}{n_1} + \frac{\stdtwo^2}{n_2}}} \geq \phi_{1-\alpha/2} \right\},$$
 le test est consistant et de niveau asymptotique $\alpha$.
 \end{block} \
 \center{Rappel : $H_0=\{ \mu_1 = \mu_2 \}$ et $H_1=\{ \mu_1 \neq \mu_2 \}$}
@@ -113,7 +113,7 @@ le test est consistant et de niveau asymptotique $\alpha$.
 Avec $\mu=\mu_1=\mu_2$, on a :
 \begin{align*}
 \text{p-valeur} & = \prob_{\mu} (Y_n \geq y_n^{\text{obs}}) \\
-& \simeq 1- F_G(y_n^{\text{obs}})
+& \simeq 2(1- F_G(y_n^{\text{obs}}))
 \end{align*}
 \end{block} 
 où $F_G$ est la fonction de répartition de la gaussienne centrée réduite.
@@ -162,10 +162,40 @@ $\sigma$ & $\sigma_1 = 0.62$ & $\sigma_2 = 0.77$ \\
 
 \begin{block}{Calcul de la p-valeur}
 On a :
-$$\text{p-valeur} = 0.017$$
+$$\text{p-valeur} = 0.034 \text{ i.e. } 3.4 \%$$
 On rejette $H_0$.
 \end{block} 
 \center{Rappel : $\alpha=5 \%$}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Pouvoir statistique du test}
+\begin{itemize}
+\item On s'intéresse au pouvoir statistique du test 
+\item On cherche à calculer $\prob_{\mu_1, \mu_2} (W_n)$
+\item On fixe les variances des deux échantillons et on trace le pouvoir en fonction de $\Delta \mu = \mu_1-\mu_2$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Expression du pouvoir statistique}
+\begin{block}{Expression du pouvoir statistique}
+Le pouvoir statistique de ce test est donné par la formule suivante :
+\begin{align*}
+\text{Statistical Power} &= 1 - F_G\left(\phi_{1-\alpha/2} - \frac{\Delta \mu}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}\right) \\
+&\quad + F_G\left(-\phi_{1-\alpha/2} - \frac{\Delta \mu}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}\right)
+\end{align*}
+\noindent où $F_G$ est la fonction de répartition de la normale centrée réduite.
+\end{block} 
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Pouvoir statistique du test}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{statistical_power.png}
+\end{center}
 \end{frame}
 
 \begin{frame}[t]
@@ -176,6 +206,38 @@ On rejette $H_0$.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[t]
+\frametitle{Autre application : comparaison de proportions}
+\begin{itemize}
+    \item Il s'agit du cas particulier du modèle de Bernoulli.
+    \item Les deux échantillons $\mathbf{X_1}$ et $\mathbf{X_2}$ suivent des lois de Bernoulli $\mathcal{B}(p_1)$ et $\mathcal{B}(p_2)$.
+    \item Question du type : est-ce que $p_1 = p_2$ ? C'est-à-dire, est-ce que les deux groupes réussissent l'épreuve tout autant ?
+    \item Exemples d'application :
+    \begin{itemize}
+        \item Effets cliniques : comparer l'efficacité de deux traitements.
+        \item Marketing : évaluer le taux de clics entre deux campagnes.
+        \item Éducation : comparer le taux de réussite de deux méthodes pédagogiques.
+        \item Production : tester la qualité de deux lots industriels.
+        \item Environnement : comparer le taux de survie de deux espèces en milieu contrôlé.
+    \end{itemize}
+\end{itemize}
+\end{frame}
 
+\begin{frame}[t]
+\frametitle{Autre application : comparaison de proportions}
+\begin{itemize}
+\item Exemple du cours : Neymar a réussi 70 pénaltys sur 85 (82\%) et Mbappé en a réussi 20 sur 25 (80\%)
+\item Question : Neymar est-il meilleur que Mbappé au pénalty ?
+\item $p_1$ (resp. $p_2$) : probabilité que Neymar marque un penalty (resp. $p_2$)
+\item Avec les hypothèses $H_0=\{p_1 \leq p_2\}$ et $H_1=\{p_1>p_2\}$, $H_0$ n'est pas rejeté à 5\%
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{}
+\begin{center}
+    {\Huge \textbf{Fin de l'exposé}} \\[1cm]
+\end{center}
+\end{frame}
 
 \end{document}
